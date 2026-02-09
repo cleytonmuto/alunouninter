@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Post } from '../types';
 import { truncateHTML } from '../utils/htmlTruncate';
+import { rewriteGoogleDriveUrlsInHtml } from '../utils/driveImageUrl';
 import ConfirmDialog from './ConfirmDialog';
 import ShareButtons from './ShareButtons';
 
@@ -87,7 +88,7 @@ export default function PostCard({ post, isEditor, onDelete }: PostCardProps) {
         </div>
         <div 
           className="post-content" 
-          dangerouslySetInnerHTML={{ __html: truncatedContent }}
+          dangerouslySetInnerHTML={{ __html: rewriteGoogleDriveUrlsInHtml(truncatedContent) }}
         />
         {(post.categories && post.categories.length > 0) || (post.tags && post.tags.length > 0) ? (
           <div className="post-taxonomy">

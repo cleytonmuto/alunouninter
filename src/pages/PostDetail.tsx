@@ -5,6 +5,7 @@ import { auth, db } from '../firebase/config';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import type { Post } from '../types';
 import { canEditAnyPost, canEditOwnPosts } from '../utils/userProfile';
+import { rewriteGoogleDriveUrlsInHtml } from '../utils/driveImageUrl';
 import { useSiteSettings } from '../hooks/useSiteSettings';
 import ConfirmDialog from '../components/ConfirmDialog';
 import ShareButtons from '../components/ShareButtons';
@@ -232,7 +233,7 @@ export default function PostDetail() {
             ) : null}
             <div 
               className="post-detail-content" 
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: rewriteGoogleDriveUrlsInHtml(post.content) }}
             />
             <ShareButtons postId={post.id} postTitle={post.title} />
             <Comments postId={post.id} />
